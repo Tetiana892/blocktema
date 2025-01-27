@@ -18,6 +18,7 @@ if (! defined('ABSPATH')) {
 	exit;
 }
 
+// Register meta fields
 function tati_register_metabox()
 {
 	register_post_meta('post', '_meta_field_title_one', array(
@@ -32,11 +33,20 @@ function tati_register_metabox()
 }
 add_action('init', 'tati_register_metabox');
 
+// Front for Meta from fields 
+function tati_custom_metaboxes_render($attributes, $content, $block)
+{
+	$title_one = get_post_meta(get_the_ID(), '_meta_field_title_one', true);
+	return '<h2>' . $title_one . '</h2>';
+}
+
+// Register custom blocks
 function create_block_tati_blocks_block_init()
 {
-	// Убедитесь, что пути к сборкам верные
 	register_block_type(__DIR__ . '/build/tati-blocks');
-	register_block_type(__DIR__ . '/build/block-field');
+	register_block_type(__DIR__ . '/build/block-field', array(
+		'render_callback' => 'tati_custom_metaboxes_render'
+	));
 	register_block_type(__DIR__ . '/build/block-meta');
 }
 add_action('init', 'create_block_tati_blocks_block_init');
