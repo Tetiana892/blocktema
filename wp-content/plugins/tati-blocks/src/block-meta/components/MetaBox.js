@@ -1,40 +1,52 @@
 import { __ } from '@wordpress/i18n';
 import { compose } from '@wordpress/compose';
 import { withSelect, withDispatch } from '@wordpress/data';
-import { PluginDocumentSettingPanel } from '@wordpress/editor';
+import {
+	PluginDocumentSettingPanel,
+	PluginSidebar,
+	PluginSidebarMoreMenuItem,
+} from '@wordpress/editor';
 import {
 	PanelRow,
 	TextControl,
 	ColorPicker,
+	PanelBody,
 } from '@wordpress/components';
 
 const MetaBox = ( { postType, metaFields, setMetaFields } ) => {
 	if ( postType !== 'post' ) return null;
 
 	return (
-		<PluginDocumentSettingPanel
+		<>
+			<PluginSidebarMoreMenuItem target="metafield-sidebar">
+				{ __( 'Custom Metadata' ) }
+			</PluginSidebarMoreMenuItem>
+			<PluginSidebar
+				name='metafield-sidebar'
 			title={ __( 'Custom Metadata' ) }
-			initialOpen={ false }
-		>
-			<PanelRow>
-				<TextControl
-					label={ __( 'Title Two' ) }
-					value={ metaFields._meta_field_title_two }
-					onChange={ ( val ) =>
-						setMetaFields( { _meta_field_title_two: val } )
-					}
-					__nextHasNoMarginBottom={true}
-				/>
-			</PanelRow>
-			<PanelRow>
-				<ColorPicker
-					color={ metaFields._meta_field_color }
-					onChange={ ( val ) =>
-						setMetaFields( { _meta_field_color: val } )
-					}
-				/>
-			</PanelRow>
-		</PluginDocumentSettingPanel>
+			>
+				<PanelBody>
+					<PanelRow>
+						<TextControl
+							label={ __( 'Title Two' ) }
+							value={ metaFields._meta_field_title_two }
+							onChange={ ( val ) =>
+								setMetaFields( { _meta_field_title_two: val } )
+							}
+							__nextHasNoMarginBottom={ true }
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ColorPicker
+							color={ metaFields._meta_field_color }
+							onChange={ ( val ) =>
+								setMetaFields( { _meta_field_color: val } )
+							}
+						/>
+					</PanelRow>
+				</PanelBody>
+			</PluginSidebar>
+		</>
 	);
 };
 
