@@ -19,7 +19,11 @@
 	},
 	"dependencies": {
 		"@wordpress/components": "^29.2.0",
+		"@wordpress/compose": "^7.16.0",
 		"@wordpress/core-data": "^7.16.0",
-		"@wordpress/data": "^10.16.0"
+		"@wordpress/data": "^10.16.0",
+		"@wordpress/edit-post": "^8.16.0",
+		"@wordpress/interface": "^9.1.0",
+		"@wordpress/plugins": "^7.16.0"
 	}
 }
