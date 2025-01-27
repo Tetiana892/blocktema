@@ -22,8 +22,8 @@ const MetaBox = ( { postType, metaFields, setMetaFields } ) => {
 				{ __( 'Custom Metadata' ) }
 			</PluginSidebarMoreMenuItem>
 			<PluginSidebar
-				name='metafield-sidebar'
-			title={ __( 'Custom Metadata' ) }
+				name="metafield-sidebar"
+				title={ __( 'Custom Metadata' ) }
 			>
 				<PanelBody>
 					<PanelRow>

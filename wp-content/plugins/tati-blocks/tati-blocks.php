@@ -17,6 +17,56 @@
 if (! defined('ABSPATH')) {
 	exit;
 }
+// Classic Metabox
+function tati_create_classic_meta()
+{
+	add_meta_box(
+		"tati_metafields_box",
+		__('Custom Meta', 'tati-blocks'),
+		'tati_blocks_custom_meta',
+		'post',
+		'side',
+		'default'
+	);
+}
+add_action('add_meta_boxes', 'tati_create_classic_meta');
+
+// Render metabox
+function tati_blocks_custom_meta($post)
+{
+	wp_nonce_field('tati_save_custom_meta_nonce', 'tati_nonce_field');
+
+	$title_two = get_post_meta($post->ID, '_meta_field_title_two', true);
+?>
+	<div>
+		<h4><?php echo __('Title:', 'tati-blocks'); ?></h4>
+		<p>
+			<input type="text" id="_meta_field_title_two" name="_meta_field_title_two" value="<?php echo esc_attr($title_two); ?>" />
+		</p>
+	</div>
+<?php
+}
+
+// Save meta
+function tati_save_custom_meta($post_id)
+{
+
+	if (!isset($_POST['tati_nonce_field']))
+		return;
+
+	if (!isset($_POST['_meta_field_title_two'])) return;
+
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
+	if (!current_user_can('edit_post', $post_id)) return;
+
+	if (isset($_POST['_meta_field_title_two'])) {
+		$title_two = sanitize_text_field($_POST['_meta_field_title_two']);
+		update_post_meta($post_id, '_meta_field_title_two', $title_two);
+	}
+}
+
+add_action('save_post', 'tati_save_custom_meta');
 
 // Register meta fields
 function tati_register_metabox()
